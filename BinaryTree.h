@@ -145,15 +145,13 @@ public:
 
 
     /**
-     * 析构函数，遍历销毁所有子节点
+     * 销毁树
      */
-    ~TreeNode() {
-        genNodesNum();
+    void destroy() {
         std::stack<TreeNode *> nodes;
-        int counter = 0;
 
         nodes.push(this);
-        for (int i = 0; i < this->len; i++) {
+        while (!nodes.empty()) {
             TreeNode *curr = nodes.top();
             nodes.pop();
 
@@ -162,11 +160,11 @@ public:
             }
             nodes.push(curr->left);
             nodes.push(curr->right);
-            if (i != 0) {
-                delete curr;
-            }
+
+            delete curr;
         }
     }
+
 
 private:
     void printSpace(int num) {

@@ -3,5 +3,9 @@ project(C__Code)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp StringUtils.h BinaryTree.h)
+INCLUDE_DIRECTORIES(
+        /lib
+)
+set(SOURCE_FILES main.cpp StringUtils.h BinaryTree.h VectorHelper.h)
+
 add_executable(C__Code ${SOURCE_FILES})
