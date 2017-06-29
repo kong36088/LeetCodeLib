@@ -16,6 +16,13 @@
 
 class StringUtils {
 public:
+    /**
+     * 把字符串按照所需的字符分割成为数组
+     *
+     * @param s 源字符串
+     * @param v 目标变量，结果存放位置
+     * @param c 需要切割的字符
+     */
     static void split(const std::string &s, std::vector<std::string> &v, const std::string &c) {
         std::string::size_type pos1, pos2;
         pos2 = s.find(c);
@@ -30,6 +37,14 @@ public:
             v.push_back(s.substr(pos1));
     }
 
+    /**
+     * trim两边指定字符
+     *
+     * @param str 待处理字符串
+     * @param striptype 指定要处理哪一边，LEFTSTRIP、RIGHTSTRIP、BOTHSTRIP
+     * @param chars 要去除的字符
+     * @return
+     */
     static std::string trim(const std::string &str, int striptype, const std::string &chars = " \n\r\t") {
         std::string::size_type strlen = str.size();
         std::string::size_type charslen = chars.size();
@@ -80,11 +95,23 @@ public:
         }
     }
 
+    /**
+     * string转int
+     *
+     * @param int_temp 源变量
+     * @param string_temp 存放变量
+     */
     static void str2int(int &int_temp, const std::string &string_temp) {
         std::stringstream stream(string_temp);
         stream >> int_temp;
     }
 
+    /**
+     * int 转int
+     *
+     * @param int_temp 源变量
+     * @param string_temp 存放变量
+     */
     static void int2str(const int &int_temp, std::string &string_temp) {
         std::stringstream stream;
         stream << int_temp;

@@ -21,6 +21,11 @@ public:
 
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 
+    /**
+     * 构造函数生成树结构，例:[1,2,3,4,null,5,6]
+     *
+     * @param nodeString
+     */
     TreeNode(std::string nodeString) {
 
         std::vector<std::string> nodesValue;
@@ -64,7 +69,9 @@ public:
         this->len = len;
     }
 
-    // 遍历自身所有节点
+    /**
+     * 遍历所有节点
+     */
     void traverse() {
         genNodesNum();
 
@@ -111,7 +118,11 @@ public:
 
     }
 
-    // 获取节点数
+    /**
+     * 获取节点数，返回结果并且结果放入this->len
+     *
+     * @return 节点数
+     */
     int genNodesNum() {
         std::stack<TreeNode *> nodes;
         int nodeNum = 0;
@@ -128,10 +139,14 @@ public:
             nodes.push(curr->right);
             nodeNum++;
         }
+        this->len = nodeNum;
         return nodeNum;
     }
 
 
+    /**
+     * 析构函数，遍历销毁所有子节点
+     */
     ~TreeNode() {
         genNodesNum();
         std::stack<TreeNode *> nodes;
