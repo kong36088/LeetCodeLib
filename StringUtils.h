@@ -98,8 +98,8 @@ public:
     /**
      * string转int
      *
-     * @param int_temp 源变量
-     * @param string_temp 存放变量
+     * @param int_temp 存放变量
+     * @param string_temp 源变量
      */
     static void str2int(int &int_temp, const std::string &string_temp) {
         std::stringstream stream(string_temp);
