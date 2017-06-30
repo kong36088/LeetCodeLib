@@ -6,6 +6,6 @@ set(CMAKE_CXX_STANDARD 11)
 INCLUDE_DIRECTORIES(
         /lib
 )
-set(SOURCE_FILES main.cpp StringUtils.h BinaryTree.h VectorHelper.h)
+set(SOURCE_FILES main.cpp StringUtils.h BinaryTree.h VectorHelper.h ListNode.h)
 
 add_executable(C__Code ${SOURCE_FILES})

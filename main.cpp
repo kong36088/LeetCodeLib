@@ -3,60 +3,101 @@
 #include "StringUtils.h"
 #include "BinaryTree.h"
 #include "VectorHelper.h"
+#include "ListNode.h"
 
 using namespace std;
 
-void split(const std::string &s, std::vector<std::string> &v, const std::string &c) {
-    std::string::size_type pos1, pos2;
-    pos2 = s.find(c);
-    pos1 = 0;
-    while (std::string::npos != pos2) {
-        v.push_back(s.substr(pos1, pos2 - pos1));
-
-        pos1 = pos2 + c.size();
-        pos2 = s.find(c, pos1);
-    }
-    if (pos1 != s.length())
-        v.push_back(s.substr(pos1));
-}
-
 class Solution {
 public:
-    vector<vector<string>> findDuplicate(vector<string> &paths) {
-        unordered_map<string, vector<string>> resultMap;
-        vector<vector<string>> result;
-
-        for (string path :paths) {
-            vector<string> pathArr;
-            split(path, pathArr, " ");
-            string pathRoot = pathArr[0] + '/';
-
-            //遍历所有文件
-            for (int i = 1; i < pathArr.size(); i++) {
-                string fileName = pathArr[i].substr(0, pathArr[i].find('('));
-                string content = pathArr[i].substr(pathArr[i].find('(') + 1, pathArr[i].find(')'));
-                if (resultMap.find(content) != resultMap.end()) {
-                    resultMap[content].push_back(pathRoot + fileName);
-                } else {
-                    resultMap[content] = vector<string>({pathRoot + fileName});
-                }
-            }
-            cout << endl;
-
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+        if (l1 == NULL) {
+            return l2;
         }
-
-        unordered_map<string, vector<string>>::iterator it = resultMap.begin();
-        for (int i = 0; it != resultMap.end(); it++, i++) {
-            if ((*it).second.size() < 2) {
-                continue;
-            }
-            result.push_back((*it).second);
+        if (l2 == NULL) {
+            return l1;
         }
-        //VectorHelper::traverse(result);
+        stack<int> s1, s2;
+        ListNode *p1 = l1, *p2 = l2;
+        ListNode *result = NULL;
+        while (p1 != NULL) {
+            s1.push(p1->val);
+            p1 = p1->next;
+        }
+        while (p2 != NULL) {
+            s2.push(p2->val);
+            p2 = p2->next;
+        }
+        int increase = 0;
+
+        while (!s1.empty() && !s2.empty()) {
+            int v1 = s1.top();
+            int v2 = s2.top();
+            s1.pop();
+            s2.pop();
+
+            int sum;
+            if (v1 + v2 + increase > 9) {
+                sum = v1 + v2 - 10 + increase;
+                increase = 1;
+            } else {
+                sum = v1 + v2 + increase;
+                increase = 0;
+            }
+
+            if (result == NULL) {
+                result = new ListNode(sum);
+                result->next = NULL;
+            } else {
+                ListNode *newNode = new ListNode(sum);
+                newNode->next = result;
+                result = newNode;
+            }
+        }
+        while (!s1.empty()) {
+            int sum = s1.top() + increase;
+            s1.pop();
+            increase = 0;
+            if(sum > 9){
+                sum -=10;
+                increase = 1;
+            }
+
+            if (result == NULL) {
+                result = new ListNode(sum);
+                result->next = NULL;
+            } else {
+                ListNode *newNode = new ListNode(sum);
+                newNode->next = result;
+                result = newNode;
+            }
+        }
+        while (!s2.empty()) {
+            int sum = s2.top() + increase;
+            s2.pop();
+            increase = 0;
+            if(sum > 9){
+                sum -=10;
+                increase = 1;
+            }
+
+            if (result == NULL) {
+                result = new ListNode(sum);
+                result->next = NULL;
+            } else {
+                ListNode *newNode = new ListNode(sum);
+                newNode->next = result;
+                result = newNode;
+            }
+        }
+        if (increase != 0) {
+            ListNode *newNode = new ListNode(1);
+            newNode->next = result;
+            result = newNode;
+        }
 
         return result;
-
     }
+
 };
 
 
@@ -72,20 +113,20 @@ int main() {
     TreeNode t3(t3String);
     TreeNode *t4 = new TreeNode(t3String);
 
-    vector<vector<int>> testVec;
-    testVec.push_back(vector<int>(1, 2));
-    testVec.push_back(vector<int>(3, 4));
-    Solution *s = new Solution();
+    ListNode l1("[5]");
+    ListNode l2("[5,5]");
 
-    auto result = VectorHelper::generate<string>(
-            "[\"root/a 1.txt(abcd) 2.txt(efgh)\",\"root/c 3.txt(abcd)\",\"root/c/d 4.txt(efgh)\",\"root 4.txt(efgh)\"]");
-    for (string x : result) {
-        cout << x << " 1" << endl;
-    }
+
+    Solution *s = new Solution();
     cout << endl;
-    vector<vector<string>> r = s->findDuplicate(result);
+    ListNode *r = s->addTwoNumbers(&l1, &l2);
+
 
     t4->destroy();
+    if (r != NULL) {
+        r->traverse();
+    }
+    r->destory();
     delete s;
 
 }
