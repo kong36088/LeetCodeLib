@@ -117,6 +117,28 @@ public:
         stream << int_temp;
         string_temp = stream.str();   //此处也可以用 stream>>string_temp
     }
+
+    static void reverse(std::string &source) {
+        if (source.length() < 2) {
+            return;
+        }
+        int length = source.length();
+        int distance = length / 2;
+        for (int i = 0; i < distance; i++) {
+            std::swap(source[i], source[length - i - 1]);
+        }
+    }
+
+    static void reverse(std::string &source, int start, int end) {
+        int length = end - start;
+        int distance = length / 2;
+        if (length < 2) {
+            return;
+        }
+        for (int i = 0; i < distance; i++) {
+            std::swap(source[i + start], source[end - i]);
+        }
+    }
 };
 
 
