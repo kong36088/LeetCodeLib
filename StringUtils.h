@@ -130,7 +130,7 @@ public:
     }
 
     static void reverse(std::string &source, int start, int end) {
-        int length = end - start;
+        int length = end - start + 1;
         int distance = length / 2;
         if (length < 2) {
             return;
